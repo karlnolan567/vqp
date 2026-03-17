@@ -1,0 +1,31 @@
+{
+    "signals": {
+        "S001": {"name": "Adverse Events", "domain": "SSI", "type": "count", "thresholds": [0, 3, 8, 15], "scores": [1.0, 0.8, 0.4, 0.1], "logic": "negative"},
+        "S006": {"name": "Customer Complaints", "domain": "SSI", "type": "count", "thresholds": [0, 2, 5, 10], "scores": [1.0, 0.7, 0.4, 0.1], "logic": "negative"},
+        "S002": {"name": "Deviation Rate", "domain": "FI", "type": "percentage", "thresholds": [0.02, 0.05, 0.10, 0.15], "scores": [1.0, 0.8, 0.5, 0.1], "logic": "negative"},
+        "S007": {"name": "EM Excursions", "domain": "FI", "type": "count", "thresholds": [0, 2, 5, 10], "scores": [1.0, 0.7, 0.4, 0.1], "logic": "negative"},
+        "S003": {"name": "Audit Findings", "domain": "RI", "type": "count", "thresholds": [0, 1, 3, 6], "scores": [1.0, 0.7, 0.4, 0.1], "logic": "negative"},
+        "S008": {"name": "CAPA Overdue", "domain": "RI", "type": "count", "thresholds": [0, 2, 5, 10], "scores": [1.0, 0.8, 0.4, 0.1], "logic": "negative"},
+        "S004": {"name": "Batch Reject Rate", "domain": "QCI", "type": "percentage", "thresholds": [0.005, 0.015, 0.03, 0.06], "scores": [1.0, 0.9, 0.5, 0.2], "logic": "negative"},
+        "S005": {"name": "Training Compliance", "domain": "BEI", "type": "percentage", "thresholds": [0.98, 0.95, 0.90, 0.85], "scores": [1.0, 0.8, 0.5, 0.2], "logic": "positive"}
+    },
+    "index_weights": {
+        "SSI": {"S001": 0.7, "S006": 0.3},
+        "FI": {"S002": 0.6, "S007": 0.4},
+        "RI": {"S003": 0.8, "S008": 0.2},
+        "QCI": {"S004": 1.0},
+        "BEI": {"S005": 1.0}
+    },
+    "quadrant_thresholds": {
+        "FI_high": 0.65,
+        "RI_high": 0.65
+    },
+    "patterns": [
+        {
+            "id": "P001", "name": "Operational Instability", "signals": ["S002", "S004", "S007"], "logic": "any_low_score", "threshold": 0.4, "interpretation": "High deviation rates, batch rejects, and EM excursions indicate significant facility instability."
+        },
+        {
+            "id": "P002", "name": "Regulatory & Safety Failure", "signals": ["S001", "S003", "S008"], "logic": "any_low_score", "threshold": 0.3, "interpretation": "Critical failure in either safety (AEs) or regulatory compliance (Audits/CAPA) detected."
+        }
+    ]
+}

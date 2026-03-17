@@ -1,0 +1,9 @@
+streamlit
+pandas
+openpyxl
+sqlalchemy
+plotly
+reportlab
+python-dotenv
+pytest
+fpdf
